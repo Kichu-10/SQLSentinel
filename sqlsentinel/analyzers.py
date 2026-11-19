@@ -2,7 +2,7 @@ import re
 from difflib import SequenceMatcher
 
 DB_ERRORS = {
-    "MySQL": [r"you have an error in your sqk syntax", r"mysql_fetch", r"mysqli?_"],
+    "MySQL": [r"you have an error in your sql syntax", r"mysql_fetch", r"mysqli?_"],
     "PostgreSQL": [r"postgresql.*error", r"pg_query\(", r"unterminated quoted string"],
     "Microsoft SQL Server": [r"unclosed quotation mark", r"microsoft ole dc provider for sql server", r"sqlserver"],
     "SQLite": [r"sqlite error", r"sqlite3\.operationalerror", r"near .+ syntax error"],
@@ -20,6 +20,6 @@ def similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, re.sub(r"\s+", " ", a)[:20000],
                            re.sub(r"\s+", " ", b)[:20000]).ratio()
 
-def detect_Waf(status:int, text:str) -> bool:
+def detect_waf(status: int, text: str) -> bool:
     low = text.lower()
     return status in (401, 403, 406, 429, 503) or any(x in low for x in WAF_MARKERS)

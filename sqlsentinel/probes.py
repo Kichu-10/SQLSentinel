@@ -14,10 +14,10 @@ FALSE_PROBE = Probe("boolean-false", "1 and 1=2", "Compare a logically false con
 def replace_parameter(url: str, parameter: str, value: str)  -> str:
     parts = urlsplit(url)
     pairs = parse_qsl(parts.query, keep_blank_values=True)
-    replace = Flase
+    replaced = False
     output = []
     for key, old in pairs:
-        if key == parameter and not replaces:
+        if key == parameter and not replaced:
             output.append((key, value))
             replaced = True
         else:

@@ -49,13 +49,52 @@ Feature	Description
 
 ⚙️ INSTALLATION
 
-git clone https://github.com/YOUR_USERNAME/SQLSentinel.git
+Python 3.10 or newer is required. Other users can clone the repository and
+install the CLI from its root directory:
+
+```shell
+git clone https://github.com/Kichu-10/SQLSentinel.git
 cd SQLSentinel
-pip install -r requirements.txt
+python -m pip install .
+```
 
 🚀 USAGE
 
-python main.py --help
+Show available commands and the installed version:
+
+```shell
+sqlsentinel --help
+sqlsentinel version
+```
+
+Inspect a URL's query parameters without sending a request:
+
+```shell
+sqlsentinel inspect-url "https://example.com/products?id=1&category=books"
+```
+
+To scan a different URL, replace the example URL and hostname with the exact
+target covered by your written authorization:
+
+```shell
+sqlsentinel scan "https://app.example.com/products?id=1" --scope-host app.example.com --authorized --allow-public-target --max-requests 12 --delay 1 --timeout 8 --output reports/report.json --format json
+```
+
+`--scope-host` must match the URL's hostname exactly (no scheme or path).
+`--allow-public-target` is required for public hosts; use it only when your
+written authorization covers that host. Omit it for private or local targets.
+The scanner is bounded and non-destructive; it does not extract database
+contents or write to the target. Run `sqlsentinel scan --help` for all options.
+
+🧪 TESTS
+
+Contributors can install the test dependencies and run the test suite from the
+repository root:
+
+```shell
+python -m pip install -e ".[dev]"
+python -m pytest -q
+```
 
 See the documentation for supported commands and authorized testing workflows.
 
